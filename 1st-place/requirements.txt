@@ -1,0 +1,13 @@
+--extra-index-url https://download.pytorch.org/whl/cu117
+numpy
+opencv-python
+opencv-python-headless
+pandas
+Pillow
+scikit-image
+scikit-learn
+torch==1.13.1
+segmentation-models-pytorch
+timm
+tqdm
+tensorboard

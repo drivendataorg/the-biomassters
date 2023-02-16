@@ -1,0 +1,117 @@
+
+HOW TO DOWNLOAD THE BIOMASSTERS CHALLENGE DATA
+
+------------------------------------------------
+
+Welcome to The BioMassters challenge! These instructions will help you access the satellite imagery and LiDAR data for this competition.
+
+The data folders for the competition are hosted on a public AWS S3 bucket. Within the bucket, there are separate folders for the training set features ("train_features", which contains satellite data), testing set features ("test_features"), and training set labels ("train_agbm", which contains LiDAR ground-truth data).
+
+The following directory structure is used:
+
+|-- features_metadata.csv
+|-- train_features
+|   |__<satellite files>
+|-- test_features
+|   |__ <satellite files>
+|-- train_agbm_metadata.csv
+|-- train_agbm
+    |__ <LiDAR files>
+
+Note the size of each subdirectory:
+
+	dataset         | # files  | size
+    --------------------------------------
+	train_features  |  189078  | 215.9GB
+	test_features   |   63348  |  73.0GB
+	train_agbm      |    8689  |   2.1GB
+
+Data folders can be downloaded from the following links:
+
+    - training set features: s3://drivendata-competition-biomassters-public-us/train_features/
+    - test set features: s3://drivendata-competition-biomassters-public-us/test_features/
+    - training set AGBM: s3://drivendata-competition-biomassters-public-us/train_agbm
+
+The satellite feature data files are named `{chip_id}_{satellite}_{month}.tif`, where `month` represents the number of months starting from September (00 is September, 01 is October, 02 is November, and so on). The LiDAR AGBM files are named `{chip_id}_agbm.tif`.
+
+## Regional buckets
+
+The bucket listed above is in the US East AWS Region. The same data is also hosted on AWS buckets in the EU (Frankfurt) and Asia (Singapore). To get the fastest download times, download from the bucket closest to you.
+
+To access buckets other than the default US East bucket, simply replace "-us" at the end of the bucket name with "-as" or "-eu". For the train data, rather than "s3://drivendata-competition-biomassters-public-us/train_features/", use one of the following:
+
+    s3://drivendata-competition-biomassters-public-eu/train_features/
+    s3://drivendata-competition-biomassters-public-as/train_features/
+
+
+## AWS CLI
+
+The easiest way to download data from AWS is using the AWS CLI:
+
+    https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html
+
+To download an individual data file to your local machine, the general structure is
+
+    aws s3 cp <S3 URI> <local path> --no-sign-request
+
+For example:
+
+    aws s3 cp s3://drivendata-competition-biomassters-public-us/train_features/001b0634_S1_00.tif ./ --no-sign-request
+
+The above downloads the file `001b0634_S1_00.tif` from the public bucket in the US region. Adding "--no-sign-request" allows data to be downloaded without configuring an AWS profile.
+
+To download a directory rather than a file, use the `--recursive` flag. For example, to download all of the training data:
+
+    aws s3 cp s3://drivendata-competition-biomassters-public-us/train_features/ train_features/ --no-sign-request --recursive
+
+To download only a subset of the data, use the `--exclude` and `--include` flags. For example, to download only the data from Taipei use:
+
+    aws s3 cp s3://drivendata-competition-biomassters-public-us/train_features/ train_features/ --no-sign-request --recursive --exclude="*" --include="*tpe.nc"
+
+See the AWS CLI docs for more details on how to use filters and other flags:
+
+    https://docs.aws.amazon.com/cli/latest/reference/s3/#use-of-exclude-and-include-filters
+
+
+## Satellite metadata
+
+We have also provided a "features_metadata.csv" file on the "Data Download" page that contains metadata about hosted satellite data. This may be useful if you want to write a script for downloading. The metadata file also includes file hashes that can be used to verify the integrity of a downloaded file. Hashes are generated using the default cksum hash function.
+
+"features_metadata.csv" contains the following columns:
+
+- `chip_id`: A unique identifier for a single patch, or area of forest
+-* `filename`: The filename of the corresponding image, which follows the naming convention `{chip_id}_{satellite}_{month_number}.tif`. (`month_number` corresponds to the number of months since September of the year previous to when the ground truth was captured, so `00` would represent September, `01` October, and so on, until `12`, which represents August of the same year)
+- `satellite`: The satellite the image was captured by (`S1` Sentinel-1 or `S2` for Sentinel-2)
+- `split`: Whether the image is a part of the training data or test data
+- `month`: The name of the month in which the image was collected
+- `size`: The file size in bytes
+- `cksum`: A checksum value to make sure the data was transmitted correctly
+- `s3path_us`: The file location of the image in the public s3 bucket in the US East (N. Virginia) region
+- `s3path_eu`: The file location of the image in the public s3 bucket in the Europe (Frankfurt) region
+- `s3path_as`: The file location of the image in the public s3 bucket in the Asia Pacific (Singapore)
+- `corresponding_agbm`: The filename of the tif that contains the AGBM values for the chip_id
+
+To check that your data was not corrupted during download, you can generate your own hashes at the command line and compare them to the metadata. For example, we know from the metadata that the hash for the file "001b0634_S1_00.tif" is 3250666344 and the byte count is 1049524. To generate a checksum value for a locally saved version:
+
+	$ cksum test/001b0634_S1_00.tif
+	3250666344 1049524 test/001b0634_S1_00.tif
+
+## LiDAR metadata
+
+We have also provided a "train_agbm_metadata.csv" file on the "Data Download" page that contains metadata about the ground-truth AGBM measures acquired using LiDAR. This may be useful if you want to write a script for downloading. Like "features_metadata.csv", "train_agbm_metadata.csv" also includes file hashes  generated using the default cksum hash function that can be used to verify the integrity of a downloaded file.
+
+"train_agbm_metadata.csv" contains the following columns:
+
+- `chip_id`: The patch the image corresponds to
+- `filename`: The filename the image can be found under. The filename follows the convention `{chip_id}_agbm.tif`
+- `size`: The file size in bytes
+- `cksum`: A checksum value to make sure the data was transmitted correctly
+- `s3path_us`: The file location of the image in the public s3 bucket in the US East (N. Virginia) region
+- `s3path_eu`: The file location of the image in the public s3 bucket in the Europe (Frankfurt) region
+- `s3path_as`: The file location of the image in the public s3 bucket in the Asia Pacific (Singapore)
+
+##
+
+Good luck! If you have any questions you can always visit the competition forum at:
+
+	https://community.drivendata.org/c/biomass-estimation

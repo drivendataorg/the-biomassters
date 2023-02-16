@@ -1,0 +1,2 @@
+process,model,exp,val_rmse_fold0,val_rmse_fold1,val_rmse_fold2,val_rmse_fold3,val_rmse_fold4,val_rmse_avg
+plain,swin_unetr,exp1,27.96757651361926,27.436798071587223,27.501099619372138,27.895405659730407,28.09456708623075,27.779089390107952

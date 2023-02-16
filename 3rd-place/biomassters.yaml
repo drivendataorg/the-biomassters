@@ -1,0 +1,29 @@
+name: biomassters
+channels:
+  - conda-forge
+  - pytorch
+  - nvidia
+dependencies:
+  - python=3.10
+  - numpy=1.23.5
+  - pytorch
+  - torchvision
+  - pytorch-cuda=11.7
+  - pytorch-lightning=1.8.1
+  - wandb
+  - rasterio
+  - xarray
+  - rioxarray
+  - albumentations
+  - scikit-learn
+  - scikit-image
+  - jupyter_contrib_nbextensions
+  - nb_conda_kernels
+  - natsort
+  - matplotlib-base
+  - awscli
+  - pip
+  - pip:
+    - segmentation_models_pytorch==0.3.2
+    - xarray-spatial==0.3.5
+    - torchsummary==1.5.1
