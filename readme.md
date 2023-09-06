@@ -15,7 +15,7 @@ In this challenge, the competitors' goal was to build a model to predict the yea
 
 ## What's in this repository
 
-This repository contains code from winning competitors in the [BioMassters](https://www.drivendata.org/competitions/99/biomass-estimation/page/534/) DrivenData challenge.
+This repository contains code from winning competitors in the [BioMassters](https://www.drivendata.org/competitions/99/biomass-estimation/) DrivenData challenge. Code for all winning solutions are open source under the MIT License.
 
 **Winning code for other DrivenData competitions is available in the [competition-winners repository](https://github.com/drivendataorg/competition-winners).**
 
@@ -29,5 +29,7 @@ Place | User | Private Score | Summary of Model
 MATLAB Bonus Prize | Team D_R_K_A: [kaveh9877](https://www.drivendata.org/users/kaveh9877/), [AZK90](https://www.drivendata.org/users/AZK90/) | 31.08 | Combined S1 and S2 images into a 15-band 12-month composite, used a 1-D CNN to perform by-pixel regression. The resulting labels were added as a 16th band to the composites, which were then passed through a 3-D U-Net model.  
 
 Additional solution details can be found in the `reports` folder inside the directory for each submission.
+
+**Winners announcement: [Meet the Biomassters](https://drivendata.co/blog/biomass-winners)**
 
 **Benchmark blog post: [The BioMassters](https://drivendata.co/blog/biomass-benchmark)**
