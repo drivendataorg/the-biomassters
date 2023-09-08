@@ -31,6 +31,6 @@ MATLAB Bonus Prize | Team D_R_K_A: [kaveh9877](https://www.drivendata.org/users/
 
 Additional solution details can be found in the `reports` folder inside the directory for each submission.
 
-**Winners announcement: [Meet the Biomassters](https://drivendata.co/blog/biomass-winners)**
+**Winners announcement: [Meet the BioMassters](https://drivendata.co/blog/biomass-winners)**
 
 **Benchmark blog post: [The BioMassters](https://drivendata.co/blog/biomass-benchmark)**
